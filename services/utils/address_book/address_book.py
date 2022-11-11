@@ -15,14 +15,14 @@ class AddressBook:
             pickle.dump(record, fh)
 
     def get_contact(self, name: str) -> Record | None:
-        for contact in self.get_all_contacts():
+        for contact in self.__read_file():
             if name == contact.name.value:
                 return contact
 
     def search_contacts(self, value: str) -> list[Record] | None:
         found_contacts = []
 
-        for contact in self.get_all_contacts():
+        for contact in self.__read_file():
             if value in contact.name.value or any(value in str(phone.value) for phone in contact.phones):
                 found_contacts.append(contact)
 
@@ -38,7 +38,7 @@ class AddressBook:
 
         new_address_book = AddressBook()
 
-        for record in self.get_all_contacts():
+        for record in self.__read_file():
             if record.name.value == contact.name.value:
                 if remove:
                     continue
@@ -55,7 +55,7 @@ class AddressBook:
 
         records = []
 
-        for record in self.get_all_contacts():
+        for record in self.__read_file():
             records.append(record)
 
             if len(records) >= count:
@@ -65,9 +65,9 @@ class AddressBook:
         if records:
             yield records
 
-    def get_all_contacts(self) -> 'Generator[Record]':
+    def __read_file(self) -> 'Generator[Record]':
         if not os.path.exists(self.filename) or os.path.getsize(self.filename) == 0:
-            return []
+            return
 
         with open(self.filename, 'rb') as file:
 
@@ -78,7 +78,7 @@ class AddressBook:
                     break
 
     def __getitem__(self, item: str) -> Record:
-        for contact in self.get_all_contacts():
+        for contact in self.__read_file():
             if item == contact.name.value:
                 return contact
         else:
