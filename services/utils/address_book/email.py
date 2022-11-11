@@ -4,7 +4,6 @@ from .field import Field
 
 
 class Email(Field):
-
     def __init__(self, value: str):
         super().__init__(value)
         self.value: str = value
@@ -15,22 +14,13 @@ class Email(Field):
 
     @staticmethod
     def __check_email(email: str) -> str:
-        clean_email = (
-                        email.strip()
-                        .removeprefix("+")
-                        .replace("(", "")
-                        .replace(")", "")
-                        .replace("-", "")
-                        .replace(" ", "")
-                    )
 
         pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 
-        email = search(pattern, clean_email)
+        email = search(pattern, email)
 
         if not email:
-            raise ValueError(f"Email {clean_email} is not valid")
+            raise ValueError(f"Email {email} is not valid")
 
-        email = email.group()
-
-        return email
+        return email.group()
+        
