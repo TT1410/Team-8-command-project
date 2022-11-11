@@ -4,13 +4,22 @@ from datetime import date
 from .name import Name
 from .phone import Phone
 from .birthday import Birthday
+from .address import Address
+from .email import Email
 
 
 class Record:
-    def __init__(self, name: str, phone: Optional[str] = None, birthday: Optional[str] = None) -> None:
+    def __init__(self,
+                 name: str,
+                 phone: Optional[str] = None,
+                 birthday: Optional[str] = None,
+                 address: Optional[str] = None,
+                 email: Optional[str] = None) -> None:
         self.name: Name = Name(name)
         self.phones: list[Phone] = [Phone(phone)] if phone else []
         self.birthday: Birthday = Birthday(birthday) if birthday else ''
+        self.address: Birthday = Address(address) if address else ''
+        self.email: Email = Email(email) if email else ''
 
     def add_phone(self, phone: str) -> Phone:
         phone = Phone(phone)
