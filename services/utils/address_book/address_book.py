@@ -85,4 +85,4 @@ class AddressBook:
             raise KeyError(item)
 
     def __repr__(self):
-        return "AddressBook({})".format(', '.join([f"{k}={v}" for k, v in self.__dict__.items()]))
+        return 'AddressBook({})'.format(', '.join([f"{k}={v}" for k, v in self.__dict__.items()]))
