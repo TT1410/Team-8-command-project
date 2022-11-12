@@ -18,7 +18,7 @@ def add_contact(name: str) -> str:
     """
     По этой команде бот сохраняет в памяти новый контакт.
     Пользователь вводит команду add-contact и имя, обязательно через пробел.
-    Пример команды: add-contact Taras
+    Пример команды: add-contact UserName
     """
     phone = input("Enter phone number: ")
 
@@ -26,7 +26,7 @@ def add_contact(name: str) -> str:
 
     address = input("Enter address: ")
 
-    email = input("Enter email (example@gmail.com): ")
+    email = input("Enter email (example@damain.com): ")
 
     if ADDRESS_BOOK().get_contact(name):
         raise ValueError(f"Contact with the name {name} already exists. "
@@ -43,11 +43,12 @@ def remove_contact(name: str) -> str:
     """
     По этой команде бот удаляет контакт.
     Пользователь вводит команду remove-contact и имя, обязательно через пробел.
-    Пример команды: remove-contact Taras
+    Пример команды: remove-contact UserName
     """
     contact = ADDRESS_BOOK()[name]
 
-    ADDRESS_BOOK().change_contact(contact, remove=True)  # Temporary command due to impossibility to change object in the file
+    # Temporary command due to impossibility to change object in the file
+    ADDRESS_BOOK().change_contact(contact, remove=True)
 
     return f"Successfully deleted contact '{name}'"
 
@@ -58,13 +59,14 @@ def add_phone_to_contact(name: str) -> str:
     """
     По этой команде бот сохраняет в памяти новый номер телефона для существующего контакта.
     Пользователь вводит команду add-phone, имя и новый номер телефона, обязательно через пробел.
-    Пример команды: add-phone Taras 0961233032
+    Пример команды: add-phone UserName 0961233032
     """
     contact = ADDRESS_BOOK()[name]
 
     phone = contact.add_phone(input("Enter phone number: "))
 
-    ADDRESS_BOOK().change_contact(contact)  # Temporary command due to impossibility to change object in the file
+    # Temporary command due to impossibility to change object in the file
+    ADDRESS_BOOK().change_contact(contact)
 
     return f"Contact phone number {name} '{phone.value}' successfully added"
 
@@ -76,7 +78,7 @@ def change_contact_phone(name: str) -> Optional[str]:
     По этой команде бот заменяет старый номер телефона новым для существующего контакта.
     Пользователь вводит команду change-phone и имя, обязательно через пробел.
     Далее пользователю будет предложено выбрать из списка номер, который необходимо заменить новым.
-    Пример команды: change-phone Taras 0961233789
+    Пример команды: change-phone UserName 0961233789
     """
     contact = ADDRESS_BOOK()[name]
 
@@ -86,7 +88,8 @@ def change_contact_phone(name: str) -> Optional[str]:
         print(contact_phones(name))
 
         try:
-            index = int(input("Enter the index number of the phone from the list you want to replace: "))
+            index = int(
+                input("Enter the index number of the phone from the list you want to replace: "))
         except ValueError:
             print("\nChoose a number from the list!")
             print("\n(Enter 0 to cancel)")
@@ -103,7 +106,8 @@ def change_contact_phone(name: str) -> Optional[str]:
         else:
             break
 
-    ADDRESS_BOOK().change_contact(contact)  # Temporary command due to impossibility to change object in the file
+    # Temporary command due to impossibility to change object in the file
+    ADDRESS_BOOK().change_contact(contact)
 
     return f"Contact phone number {name} '{old_phone.value}' " \
            f"has been successfully replaced by '{new_phone.value}'"
@@ -116,7 +120,7 @@ def remove_contact_phone(name: str) -> Optional[str]:
     По этой команде бот удаляет номер телефона существующего контакта.
     Пользователь вводит команду remove-phon и имя, обязательно через пробел.
     Далее будет предложено выбрать номер из списка, который необходимо удалить.
-    Пример команды: remove-phone Taras
+    Пример команды: remove-phone UserName
     """
     contact = ADDRESS_BOOK()[name]
 
@@ -124,7 +128,8 @@ def remove_contact_phone(name: str) -> Optional[str]:
         print(contact_phones(name))
 
         try:
-            index = int(input("Enter the index number of the phone from the list you want to remove: "))
+            index = int(
+                input("Enter the index number of the phone from the list you want to remove: "))
         except ValueError:
             print("\nChoose a number from the list!")
             print("\n(Enter 0 to cancel)")
@@ -141,7 +146,8 @@ def remove_contact_phone(name: str) -> Optional[str]:
         else:
             break
 
-    ADDRESS_BOOK().change_contact(contact)  # Temporary command due to impossibility to change object in the file
+    # Temporary command due to impossibility to change object in the file
+    ADDRESS_BOOK().change_contact(contact)
 
     return f"\nContact phone number {name} '{old_phone.value}' deleted successfully"
 
@@ -152,7 +158,7 @@ def contact_phones(name: str) -> str:
     """
     По этой команде бот выводит в консоль номера телефонов для указанного контакта.
     Пользователь вводит команду phone и имя контакта, чьи номера нужно показать, обязательно через пробел.
-    Пример команды: phone Taras
+    Пример команды: phone UserName
     """
     contact = ADDRESS_BOOK()[name]
 
@@ -166,15 +172,17 @@ def change_contact_birthday(name: str) -> str:
     """
     По этой команде изменяет день рождения для существующего контакта.
     Пользователь вводит команду change-bd и имя обязательно через пробел.
-    Пример команды: change-bd Taras
+    Пример команды: change-bd UserName
     """
     contact = ADDRESS_BOOK()[name]
 
-    birthday = input(f"Enter the date of birth of the contact '{name}' in the format YYYY.MM.DD or DD.MM.YYYY: ")
+    birthday = input(
+        f"Enter the date of birth of the contact '{name}' in the format YYYY.MM.DD or DD.MM.YYYY: ")
 
     contact.change_birthday(birthday)
 
-    ADDRESS_BOOK().change_contact(contact)  # Temporary command due to impossibility to change object in the file
+    # Temporary command due to impossibility to change object in the file
+    ADDRESS_BOOK().change_contact(contact)
 
     return f"\nDate of birth {contact.birthday.value} of the contact '{name}' successfully saved"
 
@@ -185,17 +193,39 @@ def change_contact_email(name: str) -> str:
     """
     По этой команде изменяет email для существующего контакта.
     Пользователь вводит команду change-email и имя, обязательно через пробел.
-    Пример команды: change-email Taras
+    Пример команды: change-email UserName
     """
     contact = ADDRESS_BOOK()[name]
 
-    email = input(f"Enter the email of the contact '{name}' in the format example@domain.com: ")
+    email = input(
+        f"Enter the email of the contact '{name}' in the format example@domain.com: ")
 
     contact.change_email(email)
 
-    ADDRESS_BOOK().change_email(contact)  # Temporary command due to impossibility to change object in the file
+    # Temporary command due to impossibility to change object in the file
+    ADDRESS_BOOK().change_email(contact)
 
     return f"\nEmail {contact.email.value} of the contact '{name}' successfully saved"
+
+
+@route("change-address")
+@input_error
+def change_contact_address(name: str) -> str:
+    """
+    По этой команде изменяет адрес для существующего контакта.
+    Пользователь вводит команду change-adress и имя, обязательно через пробел.
+    Пример команды: change-address UserName
+    """
+    contact = ADDRESS_BOOK()[name]
+
+    address = input(f"Enter the address of the contact '{name}': ")
+
+    contact.change_address(address)
+
+    # Temporary command due to impossibility to change object in the file
+    ADDRESS_BOOK().change_address(contact)
+
+    return f"\nAddress {contact.address.value} of the contact '{name}' successfully saved"
 
 
 @route("days-bd")
@@ -204,12 +234,12 @@ def days_before_birthday(name: str) -> str:
     """
     По этой команде бот выводит в консоль, сколько осталось дней до дня рождения контакта.
     Пользователь вводит команду days-bd и имя контакта, обязательно через пробел.
-    Пример команды: days-bd Taras
+    Пример команды: days-bd UserName
     """
     days = ADDRESS_BOOK()[name].days_to_birthday()
 
     return (f"Until the birthday of {name} {days} days" if days else
-            f"Contact '{name}' does not have a birthday recorded. " 
+            f"Contact '{name}' does not have a birthday recorded. "
             f"To add or change a contact's birthday, use the <change-bd>")
 
 
