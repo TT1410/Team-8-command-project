@@ -58,8 +58,8 @@ def remove_contact(name: str) -> str:
 def add_phone_to_contact(name: str) -> str:
     """
     По этой команде бот сохраняет в памяти новый номер телефона для существующего контакта.
-    Пользователь вводит команду add-phone, имя и новый номер телефона, обязательно через пробел.
-    Пример команды: add-phone UserName 0961233032
+    Пользователь вводит команду add-phone и имя, обязательно через пробел.
+    Пример команды: add-phone UserName
     """
     contact = ADDRESS_BOOK()[name]
 
@@ -78,7 +78,7 @@ def change_contact_phone(name: str) -> Optional[str]:
     По этой команде бот заменяет старый номер телефона новым для существующего контакта.
     Пользователь вводит команду change-phone и имя, обязательно через пробел.
     Далее пользователю будет предложено выбрать из списка номер, который необходимо заменить новым.
-    Пример команды: change-phone UserName 0961233789
+    Пример команды: change-phone UserName 
     """
     contact = ADDRESS_BOOK()[name]
 
@@ -269,7 +269,7 @@ def search_contacts(search_value: str) -> Optional[str]:
     """
     По этой команде бот выводит в консоль всех контактов, у которых есть совпадение со строкой поиска в имени, или номере.
     Пользователь вводит команду search-contacts и имя контакта, обязательно через пробел.
-    Пример команды: search-contact Tar
+    Пример команды: search-contact any
     """
     contacts = ADDRESS_BOOK().search_contacts(search_value)
 
