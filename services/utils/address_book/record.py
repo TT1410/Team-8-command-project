@@ -42,6 +42,11 @@ class Record:
 
         return self.birthday
 
+    def change_email(self, value: str) -> Email:
+        self.email = Email(value)
+        
+        return self.email
+
     def remove_phone(self, index: int) -> Phone:
         return self.phones.pop(index - 1)
 
