@@ -1,7 +1,10 @@
+from services.db import create_all_tables
 from services.utils import text_parsing
 
 
 def main() -> None:
+    create_all_tables()
+
     while True:
         text = input("\nEnter command: ")
 
