@@ -337,6 +337,7 @@ def search_birthday_boy(days: str) -> Optional[str]:
     today = date.today()
     delta = timedelta(days=days)
     target_date = today + delta
+    found_records = 0
 
     for contact in contacts:
         if contact.birthday:
@@ -348,7 +349,9 @@ def search_birthday_boy(days: str) -> Optional[str]:
                 email = contact.email.value if contact.email else '–'
 
                 format_contacts += f"{contact.name.value:<10} : {address:^15} : {email:^10} : {birthday:^10} : {phones:^12}\n"
+
+                found_records += 1
         else:
             continue
 
-    return format_contacts
+    return format_contacts if found_records > 0 else "Нет ни одного именинника в этот день"
