@@ -18,7 +18,7 @@ class Record:
         self.name: Name = Name(name)
         self.phones: list[Phone] = [Phone(phone)] if phone else []
         self.birthday: Birthday = Birthday(birthday) if birthday else ''
-        self.address: Birthday = Address(address) if address else ''
+        self.address: Address = Address(address) if address else ''
         self.email: Email = Email(email) if email else ''
 
     def add_phone(self, phone: str) -> Phone:
