@@ -1,6 +1,6 @@
 from re import search
 
-from field import Field
+from .field import Field
 
 
 class Address(Field):
