@@ -158,7 +158,7 @@ def contact_phones(name: str) -> str:
 
 @route("change-bd")
 @input_error
-def change_contact_birthday(name: str):
+def change_contact_birthday(name: str) -> str:
     """
     По этой команде изменяет день рождения для существующего контакта.
     Пользователь вводит команду change-bd и имя обязательно через пробел.
@@ -173,6 +173,25 @@ def change_contact_birthday(name: str):
     ADDRESS_BOOK().change_contact(contact)  # Temporary command due to impossibility to change object in the file
 
     return f"\nDate of birth {contact.birthday.value} of the contact '{name}' successfully saved"
+
+
+@route("change-email")
+@input_error
+def change_contact_email(name: str) -> str:
+    """
+    По этой команде изменяет email для существующего контакта.
+    Пользователь вводит команду change-email и имя, обязательно через пробел.
+    Пример команды: change-email Taras
+    """
+    contact = ADDRESS_BOOK()[name]
+
+    email = input(f"Enter the email of the contact '{name}' in the format example@domain.com: ")
+
+    contact.change_email(email)
+
+    ADDRESS_BOOK().change_email(contact)  # Temporary command due to impossibility to change object in the file
+
+    return f"\nEmail {contact.email.value} of the contact '{name}' successfully saved"
 
 
 @route("days-bd")
