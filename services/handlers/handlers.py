@@ -24,9 +24,13 @@ def add_contact(name: str) -> str:
 
     birthday = input("Enter date of birth (YYYY.MM.DD or DD.MM.YYYY): ")
 
+    address = input("Enter address: ")
+
+    email = input("Enter email (example@gmail.com): ")
+
     if ADDRESS_BOOK().get_contact(name):
         raise ValueError(f"Contact with the name {name} already exists. "
-                         f"To add a new number to an existing contact, use the <change> command.")
+                         f"To add a new number to an existing contact, use the <change-contact> command.")
 
     ADDRESS_BOOK().add_record(Record(**locals()))
 
@@ -213,17 +217,19 @@ def days_before_birthday(name: str) -> str:
 @input_error
 def show_all_users() -> str:
     """
-    По этой команде бот выводит все сохраненные контакты с номерами телефонов и датами рождений в консоль.
+    По этой команде бот выводит все сохраненные контакты со всеми данными в консоль.
     """
-    format_contacts = ""
+    format_contacts = f"{'Name':<10} : {'Address':^15} : {'Email':^10} : {'Birthday':^10} : {'Phones':^12}\n"
 
-    for contact in ADDRESS_BOOK().iterator(1):
-        contact = contact[0]
+    for contacts in ADDRESS_BOOK().iterator(1):
+        contact = contacts[0]
 
         phones = ', '.join([str(x.value) for x in contact.phones])
         birthday = contact.birthday.value if contact.birthday else '–'
+        address = contact.address.value if contact.address else '–'
+        email = contact.email.value if contact.email else '–'
 
-        format_contacts += f"{contact.name.value:<10} : {birthday} : {phones:^12}\n"
+        format_contacts += f"{contact.name.value:<10} : {address:^15} : {email:^10} : {birthday:^10} : {phones:^12}\n"
 
     return format_contacts
 
@@ -235,18 +241,20 @@ def search_contacts(search_value: str) -> Optional[str]:
     Пользователь вводит команду search-contacts и имя контакта, обязательно через пробел.
     Пример команды: search-contact Tar
     """
-    cotacts = ADDRESS_BOOK().search_contacts(search_value)
+    contacts = ADDRESS_BOOK().search_contacts(search_value)
 
-    if not cotacts:
+    if not contacts:
         return
 
-    format_contacts = ''
+    format_contacts = f"{'Name':<10} : {'Address':^15} : {'Email':^10} : {'Birthday':^10} : {'Phones':^12}\n"
 
-    for contact in cotacts:
+    for contact in contacts:
         phones = ', '.join([str(x.value) for x in contact.phones])
         birthday = contact.birthday.value if contact.birthday else '–'
+        address = contact.address.value if contact.address else '–'
+        email = contact.email.value if contact.email else '–'
 
-        format_contacts += f"{contact.name.value:<10} : {birthday} : {phones:^12}\n"
+        format_contacts += f"{contact.name.value:<10} : {address:^15} : {email:^10} : {birthday:^10} : {phones:^12}\n"
 
     return format_contacts
 
