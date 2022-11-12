@@ -158,7 +158,7 @@ def contact_phones(name: str) -> str:
 
 @route("change-bd")
 @input_error
-def change_contact_birthday(name: str):
+def change_contact_birthday(name: str) -> str:
     """
     По этой команде изменяет день рождения для существующего контакта.
     Пользователь вводит команду change-bd и имя обязательно через пробел.
@@ -177,7 +177,7 @@ def change_contact_birthday(name: str):
 
 @route("change-email")
 @input_error
-def change_contact_email(name: str):
+def change_contact_email(name: str) -> str:
     """
     По этой команде изменяет email для существующего контакта.
     Пользователь вводит команду change-email и имя, обязательно через пробел.
