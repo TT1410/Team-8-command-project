@@ -1,14 +1,14 @@
-from .AddressBook import AddressBook
+from .ADDRESS_BOOK import ADDRESS_BOOK
 from .record import Record
 from .name import Name
 from .phone import Phone
 
-AddressBook = AddressBook
+ADDRESS_BOOK = ADDRESS_BOOK
 
 __all__ = (
-    "AddressBook",
+    "ADDRESS_BOOK",
     "Record",
     "Name",
     "Phone",
-    "AddressBook",
+    "ADDRESS_BOOK",
 )

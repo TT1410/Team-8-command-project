@@ -5,7 +5,7 @@ import os
 from .record import Record
 
 
-class AddressBook:
+class ADDRESS_BOOK:
     def __init__(self) -> None:
         self.root_package: str = "databases"
         self.filename = os.path.join(self.root_package, "CONTACTS.dat")
@@ -37,17 +37,17 @@ class AddressBook:
 
         self.filename = temporary_filename
 
-        new_AddressBook = AddressBook()
+        new_ADDRESS_BOOK = ADDRESS_BOOK()
 
         for record in self.get_all_contacts():
             if record.name.value == contact.name.value:
                 if remove:
                     continue
 
-                new_AddressBook.add_record(contact)
+                new_ADDRESS_BOOK.add_record(contact)
 
             else:
-                new_AddressBook.add_record(record)
+                new_ADDRESS_BOOK.add_record(record)
 
         os.remove(temporary_filename)
 
@@ -86,4 +86,4 @@ class AddressBook:
             raise KeyError(item)
 
     def __repr__(self):
-        return "AddressBook({})".format(', '.join([f"{k}={v}" for k, v in self.__dict__.items()]))
+        return "ADDRESS_BOOK({})".format(', '.join([f"{k}={v}" for k, v in self.__dict__.items()]))
