@@ -1,3 +1,4 @@
+from datetime import date, timedelta
 from typing import Optional
 
 from services.decorators import input_error, route
@@ -316,3 +317,35 @@ def print_name(value: str = None) -> str:
     Возвращает введенный текст.
     """
     return value
+
+
+@route("search-bd")
+@input_error
+def search_birthday_boy(days: str) -> Optional[str]:
+    """
+    По этой команде бат выводит в консоль все контакты, у которых день рождения через заданное количество дней.
+    Пользователь вводит команду search-birthday и количество дней, обязательно через пробел.
+    Пример команды: search-bd 520
+    """
+    try:
+        days = int(days)
+    except ValueError:
+        raise ValueError("Можно вводить только целые числа.")
+
+    format_contacts = f"{'Name':<10} : {'Address':^15} : {'Email':^10} : {'Birthday':^10} : {'Phones':^12}\n"
+    target_date = date.today() + timedelta(days=days)
+    found_records = 0
+
+    for contact in ADDRESS_BOOK().get_all_contacts():
+        if contact.birthday and target_date.month == birthday.month and target_date.day == birthday.day:
+            birthday = contact.birthday.value
+            phones = ', '.join([str(x.value) for x in contact.phones])
+            birthday = contact.birthday.value if contact.birthday else '–'
+            address = contact.address.value if contact.address else '–'
+            email = contact.email.value if contact.email else '–'
+
+            format_contacts += f"{contact.name.value:<10} : {address:^15} : {email:^10} : {birthday:^10} : {phones:^12}\n"
+
+            found_records += 1
+
+    return format_contacts if found_records > 0 else "Нет ни одного именинника в этот день"
