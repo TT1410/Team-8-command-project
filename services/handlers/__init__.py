@@ -23,6 +23,9 @@ from .phone import (
     remove_contact_phone,
     contact_phones,
 )
+from .notes import (
+    add_note
+)
 
 # register_message_handler(hello, 'hello')
 # register_message_handler(add_user, 'add', 3)
