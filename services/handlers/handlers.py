@@ -347,7 +347,5 @@ def search_birthday_boy(days: str) -> Optional[str]:
             format_contacts += f"{contact.name.value:<10} : {address:^15} : {email:^10} : {birthday:^10} : {phones:^12}\n"
 
             found_records += 1
-        if not contact.birthday:
-            continue
 
     return format_contacts if found_records > 0 else "Нет ни одного именинника в этот день"
