@@ -67,5 +67,10 @@ class Record(DBSession):
             )
             session.commit()
 
+    def format_record(self) -> str:
+        tags = ', '.join([str(x.value) for x in self.tags]) if self.tags else '–'
+
+        return f"\nTags: {tags}\nNote: {self.text.value}\n"
+
     def __repr__(self):
         return "Record({})".format(', '.join([f"{k}={v}" for k, v in self.__dict__.items()]))
