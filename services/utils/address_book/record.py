@@ -70,5 +70,13 @@ class Record:
 
         return (birthday - today).days
 
+    def format_record(self) -> str:
+        phones = ', '.join([str(x.value) for x in self.phones])
+        birthday = self.birthday.value if self.birthday else '–'
+        address = self.address.value if self.address else '–'
+        email = self.email.value if self.email else '–'
+
+        return f": {self.name.value:^15} : {email:^10} : {str(birthday):^10} : {phones:^30} : {address:^30} :\n"
+
     def __repr__(self):
         return "Record({})".format(', '.join([f"{k}={v}" for k, v in self.__dict__.items()]))
