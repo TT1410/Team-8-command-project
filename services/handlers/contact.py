@@ -1,7 +1,7 @@
 from typing import Optional
 
 from services.decorators import input_error, route
-from services.utils import AddressBook, Record
+from services.utils import AddressBook, address_book
 
 
 @route("add-contact")
@@ -24,7 +24,7 @@ def add_contact(name: str) -> str:
         raise ValueError(f"Contact with the name {name} already exists. "
                          f"To add a new number to an existing contact, use the <change-contact> command.")
 
-    AddressBook().add_record(Record(**locals()))
+    AddressBook().add_record(address_book.Record(**locals()))
 
     return f"Successfully created a new contact '{name}'"
 
