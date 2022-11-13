@@ -11,4 +11,11 @@ class ModelNotes(Base):
 
     id = Column(Integer, primary_key=True)
     note = Column(String)
-    tags = Column(String, primary_key=True)  # text array
+    tags = Column(String, index=True)  # text array
+
+    __mapper_args__ = {"eager_defaults": True}
+
+    def __repr__(self):
+        return ("ModelNotes({})".format(
+            ', '.join([f"{k}={v!r}" for k, v in filter(lambda x: not x[0].startswith("_"), self.__dict__.items())]))
+        )
