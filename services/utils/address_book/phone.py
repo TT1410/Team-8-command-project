@@ -1,6 +1,6 @@
 from re import search
 
-from .field import Field
+from services.utils.field import Field
 
 
 CODES_MOBILE_UA = ['067', '096', '097', '098',
