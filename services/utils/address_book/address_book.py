@@ -31,22 +31,23 @@ class AddressBook:
 
     # Temporary command due to impossibility to change object in the file
     def change_contact(self, contact: Record, remove: bool = False) -> None:
-        temporary_filename = os.path.join(self.root_package, 'old_contacts.dat')
+        temporary_filename = os.path.join(
+            self.root_package, 'old_contacts.dat')
         os.rename(self.filename, temporary_filename)
 
         self.filename = temporary_filename
 
-        new_address_book = AddressBook()
+        new_AddressBook = AddressBook()
 
         for record in self.get_all_contacts():
             if record.name.value == contact.name.value:
                 if remove:
                     continue
 
-                new_address_book.add_record(contact)
+                new_AddressBook.add_record(contact)
 
             else:
-                new_address_book.add_record(record)
+                new_AddressBook.add_record(record)
 
         os.remove(temporary_filename)
 
