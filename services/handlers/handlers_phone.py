@@ -1,7 +1,7 @@
 from typing import Optional
 
 from services.decorators import input_error, route
-from services.utils import AddressBook
+from services.utils import ADDRESS_BOOK
 
 
 @route('add-phone')
@@ -12,12 +12,12 @@ def add_phone_to_contact(name: str) -> str:
     Пользователь вводит команду add-phone и имя, обязательно через пробел.
     Пример команды: add-phone UserName
     """
-    contact = AddressBook()[name]
+    contact = ADDRESS_BOOK()[name]
 
     phone = contact.add_phone(input("Enter phone number: "))
 
     # Temporary command due to impossibility to change object in the file
-    AddressBook().change_contact(contact)
+    ADDRESS_BOOK().change_contact(contact)
 
     return f"Contact phone number {name} '{phone.value}' successfully added"
 
@@ -31,7 +31,7 @@ def change_contact_phone(name: str) -> Optional[str]:
     Далее пользователю будет предложено выбрать из списка номер, который необходимо заменить новым.
     Пример команды: change-phone UserName 
     """
-    contact = AddressBook()[name]
+    contact = ADDRESS_BOOK()[name]
 
     new_phone = input("Enter a new phone number: ")
 
@@ -58,7 +58,7 @@ def change_contact_phone(name: str) -> Optional[str]:
             break
 
     # Temporary command due to impossibility to change object in the file
-    AddressBook().change_contact(contact)
+    ADDRESS_BOOK().change_contact(contact)
 
     return f"Contact phone number {name} '{old_phone.value}' " \
            f"has been successfully replaced by '{new_phone.value}'"
@@ -73,7 +73,7 @@ def remove_contact_phone(name: str) -> Optional[str]:
     Далее будет предложено выбрать номер из списка, который необходимо удалить.
     Пример команды: remove-phone UserName
     """
-    contact = AddressBook()[name]
+    contact = ADDRESS_BOOK()[name]
 
     while True:
         print(contact_phones(name))
@@ -98,7 +98,7 @@ def remove_contact_phone(name: str) -> Optional[str]:
             break
 
     # Temporary command due to impossibility to change object in the file
-    AddressBook().change_contact(contact)
+    ADDRESS_BOOK().change_contact(contact)
 
     return f"\nContact phone number {name} '{old_phone.value}' deleted successfully"
 
@@ -111,7 +111,7 @@ def contact_phones(name: str) -> str:
     Пользователь вводит команду phone и имя контакта, чьи номера нужно показать, обязательно через пробел.
     Пример команды: phone UserName
     """
-    contact = AddressBook()[name]
+    contact = ADDRESS_BOOK()[name]
 
     return (f"Phone numbers of {name}\n\t" +
             "\n\t".join([f"{num}. {x.value}" for num, x in enumerate(contact.phones, 1)]))
