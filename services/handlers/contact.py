@@ -51,19 +51,15 @@ def show_all_users() -> str:
     """
     По этой команде бот выводит все сохраненные контакты со всеми данными в консоль.
     """
-    format_contacts = f"{'Name':<10} : {'Address':^15} : {'Email':^10} : {'Birthday':^10} : {'Phones':^12}\n"
+    format_contacts = ""
 
     for contacts in ADDRESS_BOOK().iterator(1):
         contact = contacts[0]
 
-        phones = ', '.join([str(x.value) for x in contact.phones])
-        birthday = contact.birthday.value if contact.birthday else '–'
-        address = contact.address.value if contact.address else '–'
-        email = contact.email.value if contact.email else '–'
+        format_contacts += contact.format_record()
 
-        format_contacts += f"{contact.name.value:<10} : {address:^15} : {email:^10} : {birthday:^10} : {phones:^12}\n"
-
-    return format_contacts
+    return (f": {'Name':^15} : {'Email':^15} : {'Birthday':^10} : {'Phones':^30} : {'Address':^30} :\n" +
+            format_contacts) if format_contacts else "Не сохранено ни одного контакта."
 
 
 @route("search-contacts")
@@ -76,16 +72,12 @@ def search_contacts(search_value: str) -> Optional[str]:
     contacts = ADDRESS_BOOK().search_contacts(search_value)
 
     if not contacts:
-        return
+        return "Не найдено ни одного контакта."
 
-    format_contacts = f"{'Name':<10} : {'Address':^15} : {'Email':^10} : {'Birthday':^10} : {'Phones':^12}\n"
+    format_contacts = ""
 
     for contact in contacts:
-        phones = ', '.join([str(x.value) for x in contact.phones])
-        birthday = contact.birthday.value if contact.birthday else '–'
-        address = contact.address.value if contact.address else '–'
-        email = contact.email.value if contact.email else '–'
+        format_contacts += contact.format_record()
 
-        format_contacts += f"{contact.name.value:<10} : {address:^15} : {email:^10} : {birthday:^10} : {phones:^12}\n"
-
-    return format_contacts
+    return (f": {'Name':^15} : {'Email':^15} : {'Birthday':^10} : {'Phones':^30} : {'Address':^30} :\n" +
+            format_contacts)

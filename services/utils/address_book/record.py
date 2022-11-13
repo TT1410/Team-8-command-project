@@ -76,7 +76,7 @@ class Record:
         address = self.address.value if self.address else '–'
         email = self.email.value if self.email else '–'
 
-        return f"{self.name.value:<10} : {address:^15} : {email:^10} : {birthday:^10} : {phones:^12}\n"
+        return f": {self.name.value:^15} : {email:^10} : {str(birthday):^10} : {phones:^30} : {address:^30} :\n"
 
     def __repr__(self):
         return "Record({})".format(', '.join([f"{k}={v}" for k, v in self.__dict__.items()]))
