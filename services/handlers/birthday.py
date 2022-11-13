@@ -49,12 +49,7 @@ def search_birthday_boy(days: str) -> Optional[str]:
         birthday = contact.birthday.value
 
         if target_date.month == birthday.month and target_date.day == birthday.day:
-            phones = ', '.join([str(x.value) for x in contact.phones])
-            birthday = contact.birthday.value if contact.birthday else '–'
-            address = contact.address.value if contact.address else '–'
-            email = contact.email.value if contact.email else '–'
-
-            format_contacts += f"{contact.name.value:<10} : {address:^15} : {email:^10} : {birthday:^10} : {phones:^12}\n"
+            format_contacts += contact.format_record()
 
     return (f"{'Name':<10} : {'Address':^15} : {'Email':^10} : {'Birthday':^10} : {'Phones':^12}\n" +
             format_contacts) if format_contacts else "Нет ни одного именинника в этот день"
