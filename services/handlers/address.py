@@ -17,6 +17,6 @@ def change_contact_address(name: str) -> str:
     contact.change_address(address)
 
     # Temporary command due to impossibility to change object in the file
-    AddressBook().change_address(contact)
+    AddressBook().change_contact(contact)
 
     return f"\nAddress {contact.address.value} of the contact '{name}' successfully saved"
