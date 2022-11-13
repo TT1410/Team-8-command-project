@@ -2,7 +2,7 @@ from datetime import date, timedelta
 from typing import Optional
 
 from services.decorators import input_error, route
-from services.utils import ADDRESS_BOOK
+from services.utils import AddressBook
 
 
 @route("change-bd")
@@ -13,7 +13,7 @@ def change_contact_birthday(name: str) -> str:
     Пользователь вводит команду change-bd и имя обязательно через пробел.
     Пример команды: change-bd UserName
     """
-    contact = ADDRESS_BOOK()[name]
+    contact = AddressBook()[name]
 
     birthday = input(
         f"Enter the date of birth of the contact '{name}' in the format YYYY.MM.DD or DD.MM.YYYY: ")
@@ -21,7 +21,7 @@ def change_contact_birthday(name: str) -> str:
     contact.change_birthday(birthday)
 
     # Temporary command due to impossibility to change object in the file
-    ADDRESS_BOOK().change_contact(contact)
+    AddressBook().change_contact(contact)
 
     return f"\nDate of birth {contact.birthday.value} of the contact '{name}' successfully saved"
 
@@ -42,7 +42,7 @@ def search_birthday_boy(days: str) -> Optional[str]:
     format_contacts = ""
     target_date = date.today() + timedelta(days=days)
 
-    for contact in ADDRESS_BOOK().get_all_contacts():
+    for contact in AddressBook().get_all_contacts():
         if not contact.birthday:
             continue
 
@@ -51,7 +51,7 @@ def search_birthday_boy(days: str) -> Optional[str]:
         if target_date.month == birthday.month and target_date.day == birthday.day:
             format_contacts += contact.format_record()
 
-    return (f"{'Name':<10} : {'Address':^15} : {'Email':^10} : {'Birthday':^10} : {'Phones':^12}\n" +
+    return (f": {'Name':^15} : {'Email':^15} : {'Birthday':^10} : {'Phones':^30} : {'Address':^30} :\n" +
             format_contacts) if format_contacts else "Нет ни одного именинника в этот день"
 
 
@@ -63,7 +63,7 @@ def days_before_birthday(name: str) -> str:
     Пользователь вводит команду days-bd и имя контакта, обязательно через пробел.
     Пример команды: days-bd UserName
     """
-    days = ADDRESS_BOOK()[name].days_to_birthday()
+    days = AddressBook()[name].days_to_birthday()
 
     return (f"Until the birthday of {name} {days} days" if days else
             f"Contact '{name}' does not have a birthday recorded. "
