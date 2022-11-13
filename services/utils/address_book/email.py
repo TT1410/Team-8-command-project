@@ -1,6 +1,6 @@
 from re import search
 
-from .field import Field
+from services.utils.field import Field
 
 
 class Email(Field):
