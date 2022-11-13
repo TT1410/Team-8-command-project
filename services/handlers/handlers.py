@@ -333,25 +333,21 @@ def search_birthday_boy(days: str) -> Optional[str]:
         raise ValueError("Можно вводить только целые числа.")
 
     format_contacts = f"{'Name':<10} : {'Address':^15} : {'Email':^10} : {'Birthday':^10} : {'Phones':^12}\n"
-    contacts = ADDRESS_BOOK().get_all_contacts()
-    today = date.today()
-    delta = timedelta(days=days)
-    target_date = today + delta
+    target_date = date.today() + timedelta(days=days)
     found_records = 0
 
-    for contact in contacts:
-        if contact.birthday:
+    for contact in ADDRESS_BOOK().get_all_contacts():
+        if contact.birthday and target_date.month == birthday.month and target_date.day == birthday.day:
             birthday = contact.birthday.value
-            if target_date.month == birthday.month and target_date.day == birthday.day:
-                phones = ', '.join([str(x.value) for x in contact.phones])
-                birthday = contact.birthday.value if contact.birthday else '–'
-                address = contact.address.value if contact.address else '–'
-                email = contact.email.value if contact.email else '–'
+            phones = ', '.join([str(x.value) for x in contact.phones])
+            birthday = contact.birthday.value if contact.birthday else '–'
+            address = contact.address.value if contact.address else '–'
+            email = contact.email.value if contact.email else '–'
 
-                format_contacts += f"{contact.name.value:<10} : {address:^15} : {email:^10} : {birthday:^10} : {phones:^12}\n"
+            format_contacts += f"{contact.name.value:<10} : {address:^15} : {email:^10} : {birthday:^10} : {phones:^12}\n"
 
-                found_records += 1
-        else:
+            found_records += 1
+        if not contact.birthday:
             continue
 
     return format_contacts if found_records > 0 else "Нет ни одного именинника в этот день"
