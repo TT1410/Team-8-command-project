@@ -42,6 +42,32 @@ def search_notes_by_text(text: str) -> str:
     return format_results
 
 
+@route('search-tags')
+@input_error
+def search_notes_by_tags(tags: str) -> str:
+    """
+    По этой команде бот ищет в памяти заметку по тегам.
+    Пользователь вводит через пробел команду search-tags и тег/теги через пробел по которым будет происходить поиск.
+    Пример команды: search-tags tag1 tag2
+    """
+
+    tags = tags.split()
+    tags.sort()
+
+    results: dict[str, list[notes.Record]] = {tag: notes.Notes().search_notes_by_tags([tag]) for tag in tags}
+
+    if not results:
+        return "Note was not found."
+
+    format_results = ""
+
+    for key, value in results.items():
+        note = '\n\tNote: '.join([str(x.text.value) for x in value])
+        format_results += f"{key}\n\tNote: {note}\n"
+
+    return format_results
+
+
 def find_note_by_index() -> notes.Record | str:
     dict_indexes = {}
 

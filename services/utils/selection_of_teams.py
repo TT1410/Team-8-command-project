@@ -14,7 +14,7 @@ def selection_of_teams(command: str) -> list[str]:
 
         return cmd
 
-    suggest_commands = [get_one_command(y) for y in [x for x in filter(command_filter, ROUTE_MAP.keys())]]
+    suggest_commands = [get_one_command(y) for y in list(filter(command_filter, ROUTE_MAP.keys()))]
 
     suggest_commands.sort(key=lambda x: x.find(command))
 
