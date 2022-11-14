@@ -10,7 +10,7 @@ class Field:
 
     @value.setter
     def value(self, value):
-        self.value = _value
+        self._value = value
 
     def __repr__(self):
         return f"{self.__class__.__name__}(value={self.value!r})"
