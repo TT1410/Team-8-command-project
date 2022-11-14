@@ -48,7 +48,7 @@ def find_note_by_index() -> notes.Record | str:
     num = 1
 
     for note in Notes().get_all_records():
-        dict_indexes[num] = note._id
+        dict_indexes[num] = note.note_id
 
         print(f"{num}. \t{note.format_record()}")
 
@@ -125,7 +125,7 @@ def change_note() -> str:
 @route('delete-note')
 def delete_note() -> str:
     """
-    По этой команде бот удаляет ранее сохраненнуе заметку.
+    По этой команде бот удаляет ранее сохраненную заметку.
     Пользователь вводит команду delete-note.
     Далее пользователю будет предложено выбрать из списка заметку для удаления.
     Пример команды: delete-note

@@ -16,9 +16,6 @@ def add_phone_to_contact(name: str) -> str:
 
     phone = contact.add_phone(input("Enter phone number: "))
 
-    # Temporary command due to impossibility to change object in the file
-    AddressBook().change_contact(contact)
-
     return f"Contact phone number {name} '{phone.value}' successfully added"
 
 
@@ -50,18 +47,14 @@ def change_contact_phone(name: str) -> Optional[str]:
             return
 
         try:
-            old_phone, new_phone = contact.replace_phone(index, new_phone)
+            new_phone = contact.replace_phone(index, new_phone)
         except IndexError:
             print("\nChoose a number from the list!")
             print("\n(Enter 0 to cancel)")
         else:
             break
 
-    # Temporary command due to impossibility to change object in the file
-    AddressBook().change_contact(contact)
-
-    return f"Contact phone number {name} '{old_phone.value}' " \
-           f"has been successfully replaced by '{new_phone.value}'"
+    return f"Contact {name} phone number has been successfully replaced to '{new_phone.value}'"
 
 
 @route("remove-phone")
@@ -90,17 +83,14 @@ def remove_contact_phone(name: str) -> Optional[str]:
             return
 
         try:
-            old_phone = contact.remove_phone(index)
+            phone = contact.remove_phone(index)
         except IndexError:
             print("\nChoose a number from the list!")
             print("\n(Enter 0 to cancel)")
         else:
             break
 
-    # Temporary command due to impossibility to change object in the file
-    AddressBook().change_contact(contact)
-
-    return f"\nContact phone number {name} '{old_phone.value}' deleted successfully"
+    return f"\nContact phone number {name} '{phone.value}' deleted successfully"
 
 
 @route("phone")

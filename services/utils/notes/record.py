@@ -19,12 +19,12 @@ class Record(DBSession):
     def __init__(self,
                  text: str,
                  tags: Optional[list[str]] = None,
-                 _id: Optional[int] = None) -> None:
+                 note_id: Optional[int] = None) -> None:
         self.text: Text = Text(text)
         self.tags: list[Tag] = [Tag(tag) for tag in tags] if tags else []
-        self._id: Optional[int] = _id
+        self.note_id: Optional[int] = note_id
 
-        if not self._id:
+        if not self.note_id:
             self.__save_record()
 
     def __save_record(self) -> None:
@@ -42,7 +42,7 @@ class Record(DBSession):
                                      f"To change an existing note, use the <change-note> command.")
                 print(e)
 
-            self._id = record.id
+            self.note_id = record.id
 
     def replace_text(self, new_text: str) -> None:
         self.text = new_text
@@ -50,7 +50,7 @@ class Record(DBSession):
         with self.db_session() as session:
             session.execute(
                 update(models.ModelNotes)
-                .where(models.ModelNotes.id == self._id)
+                .where(models.ModelNotes.id == self.note_id)
                 .values(note=self.text)
             )
             session.commit()
@@ -63,7 +63,7 @@ class Record(DBSession):
         with self.db_session() as session:
             session.execute(
                 update(models.ModelNotes)
-                .where(models.ModelNotes.id == self._id)
+                .where(models.ModelNotes.id == self.note_id)
                 .values(tags=str_tags)
             )
             session.commit()
@@ -72,7 +72,7 @@ class Record(DBSession):
         with self.db_session() as session:
             session.execute(
                 delete(models.ModelNotes)
-                .where(models.ModelNotes.id == self._id)
+                .where(models.ModelNotes.id == self.note_id)
             )
             session.commit()
 

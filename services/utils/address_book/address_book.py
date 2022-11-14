@@ -1,23 +1,28 @@
 from typing import Optional, Generator
-import pickle
-import os
+import json
 
+from sqlalchemy import (
+    select,
+)
+
+from services.db import (
+    DBSession,
+    models,
+)
 from .record import Record
+from .phone import Phone
 
 
-class AddressBook:
-    def __init__(self) -> None:
-        self.root_package: str = "databases"
-        self.filename = os.path.join(self.root_package, "CONTACTS.dat")
-
-    def add_record(self, record: Record) -> None:
-        with open(self.filename, 'ab') as fh:
-            pickle.dump(record, fh)
+class AddressBook(DBSession):
 
     def get_contact(self, name: str) -> Record | None:
-        for contact in self.get_all_contacts():
-            if name == contact.name.value:
-                return contact
+        with self.db_session() as session:
+            contact = session.execute(
+                select(models.ModelContacts)
+                .where(models.ModelContacts.name == name)
+            ).scalar()
+
+            return self.__record_from_models_to_class(contact)
 
     def search_contacts(self, value: str) -> list[Record] | None:
         found_contacts = []
@@ -28,27 +33,6 @@ class AddressBook:
 
         if found_contacts:
             return found_contacts
-
-    # Temporary command due to impossibility to change object in the file
-    def change_contact(self, contact: Record, remove: bool = False) -> None:
-        temporary_filename = os.path.join(self.root_package, 'old_contacts.dat')
-        os.rename(self.filename, temporary_filename)
-
-        self.filename = temporary_filename
-
-        new_address_book = AddressBook()
-
-        for record in self.get_all_contacts():
-            if record.name.value == contact.name.value:
-                if remove:
-                    continue
-
-                new_address_book.add_record(contact)
-
-            else:
-                new_address_book.add_record(record)
-
-        os.remove(temporary_filename)
 
     def iterator(self, count: Optional[int] = None) -> 'Generator[list[Record]]':
         count = count if count else "inf"
@@ -66,23 +50,35 @@ class AddressBook:
             yield records
 
     def get_all_contacts(self) -> 'Generator[Record]':
-        if not os.path.exists(self.filename) or os.path.getsize(self.filename) == 0:
-            return []
+        with self.db_session() as session:
+            records = session.execute(
+                select(models.ModelContacts)
+            ).scalars()
 
-        with open(self.filename, 'rb') as file:
-
-            while True:
-                try:
-                    yield pickle.load(file)
-                except EOFError:
-                    break
+            for record in records:
+                yield self.__record_from_models_to_class(record)
 
     def __getitem__(self, item: str) -> Record:
-        for contact in self.get_all_contacts():
-            if item == contact.name.value:
-                return contact
-        else:
+        record = self.get_contact(item)
+
+        if not record:
             raise KeyError(item)
 
-    def __repr__(self):
-        return "AddressBook({})".format(', '.join([f"{k}={v}" for k, v in self.__dict__.items()]))
+        return record
+
+    @classmethod
+    def __record_from_models_to_class(cls, record: models.ModelContacts) -> Optional[Record]:
+        if not record:
+            return
+
+        contact = Record(
+            name=record.name,
+            birthday=record.birthday.isoformat(),
+            address=record.address,
+            email=record.email,
+            contact_id=record.id
+        )
+
+        contact.phones = [Phone(str(x)) for x in json.loads(record.phones)]
+
+        return contact
