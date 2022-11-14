@@ -1,5 +1,5 @@
 from services.decorators import input_error, route
-from services.utils import notes
+from services.utils import notes, Notes
 
 
 @route('add-note')
@@ -40,3 +40,58 @@ def search_notes_by_text(text: str) -> str:
         format_results += result.format_record() + '\n'
 
     return format_results
+
+
+def find_note_by_index() -> notes.Record | None:
+    dict_indexes = {}
+
+    num = 1
+
+    for note in Notes().get_all_records():
+        dict_indexes[num] = note._id
+
+        print(f"{num}. \t{note.format_record()}")
+
+        num += 1
+
+    while True:
+        try:
+            index = int(
+                input("Enter the index of the note from the list to which you want to add new tags: "))
+        except ValueError:
+            print("\nChoose a number from the list!")
+            print("\n(Enter 0 to cancel)")
+            continue
+
+        if index == 0:
+            return
+
+        try:
+            return Notes().search_notes_by_id(dict_indexes[index])
+        except KeyError:
+            print("\nChoose a number from the list!")
+            print("\n(Enter 0 to cancel)")
+
+
+@route('add-tags')
+def add_tags_to_notes() -> str:
+    """
+    По этой команде бот добавляет теги для существующей записи.
+    Пользователь вводит команду add-tags.
+    Далее пользователю будет предложено ввести теги, разделенные пробелом.
+    Пример команды: add-tags
+    qwerty asdfg
+    """
+    note = find_note_by_index()
+
+    if not note:
+        return "Cancel"
+
+    tag_input = None
+
+    while not tag_input:
+        tag_input = input("Enter tags separated by space: ")
+
+    note.add_tags(tag_input.split(" "))
+
+    return 'The tags have been added successfully'
