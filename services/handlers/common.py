@@ -60,12 +60,12 @@ def sorting_files_in_a_dir(path: str) -> str:
     for ext in DIR_SUFF_DICT.values():
         extensions.extend(ext)
 
-    print(f"\nРозпочато пошук та сортування файлів... ")
+    print(f"Пошук файлів з наступними розширеннями: {extensions}")
     sleep(5)
 
     sort(root_folder)
 
-    print("""\n[!] Сортування завершено
+    return ("""\n[!] Сортування завершено
     Знайдено {images_len} файлів категорії images: {images}
     Знайдено {documents_len} файлів категорії documents: {documents}
     Знайдено {audio_len} файлів категорії audio: {audio}

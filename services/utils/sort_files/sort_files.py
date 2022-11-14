@@ -1,10 +1,12 @@
-import shutil
-import os
 import re
-
+import os
 from pathlib import Path
+import shutil
 
-from .constants import DIR_SUFF_DICT, TRANS, FOUND_FILES
+from .constants import (
+    DIR_SUFF_DICT,
+    TRANS, FOUND_FILES
+)
 
 
 def sort(path: Path) -> None:
@@ -53,7 +55,7 @@ def file_moderation(file: Path, path: Path) -> str | None:
                         file, 
                         archive_folder
                     )
-                except shutil.ReadError as e:
+                except (shutil.ReadError, RuntimeError) as e:
                     print(f"Виникла помилка: {e}\nНевдала спроба розпакувати архів: {file.absolute()}")
             
             return folder_name
@@ -76,10 +78,6 @@ def folder_moderation(folder: Path) -> None:
                     f"{str(folder.absolute()).removesuffix(folder.name)}{normalize(folder.name)}"
                 )
             )
-
-
-def normalize(name: str) -> str:
-    return re.sub(r'([^\w\s]+)', lambda match: '_' * len(match.group()), name).translate(TRANS)
 
 
 def normalize(name: str) -> str:
