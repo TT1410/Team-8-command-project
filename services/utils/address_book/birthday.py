@@ -4,11 +4,6 @@ from services.utils.field import Field
 
 
 class Birthday(Field):
-
-    def __init__(self, value: str) -> None:
-        super().__init__(value)
-        self.value: date = value
-
     @Field.value.setter
     def value(self, value) -> None:
         self._value: date = self.check_date(value)
