@@ -40,6 +40,15 @@ class Notes(DBSession):
             for record in records:
                 yield self.__record_from_models_to_class(record)
 
+    def search_notes_by_id(self, _id: int) -> Record:
+        with self.db_session() as session:
+            record = session.execute(
+                select(models.ModelNotes)
+                .where(models.ModelNotes.id == _id)
+            ).scalar()
+
+            return self.__record_from_models_to_class(record)
+
     @staticmethod
     def __record_from_models_to_class(record: models.ModelNotes) -> Record:
-        return Record(text=record.note, tags=json.loads(record.tags), id=record.id)
+        return Record(text=record.note, tags=json.loads(record.tags), _id=record.id)
