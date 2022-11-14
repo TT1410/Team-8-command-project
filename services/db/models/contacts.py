@@ -10,7 +10,7 @@ class ModelNotes(Base):
     __tablename__ = "notes"
 
     id = Column(Integer, primary_key=True)
-    note = Column(String)
+    note = Column(String, unique=True)
     tags = Column(String, index=True)  # text array
 
     __mapper_args__ = {"eager_defaults": True}
