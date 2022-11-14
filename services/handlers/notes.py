@@ -37,6 +37,6 @@ def search_notes_by_text(text: str) -> str:
     format_results = ""
 
     for result in results:
-        format_results += result.format_record()
+        format_results += result.format_record() + '\n'
 
     return format_results
