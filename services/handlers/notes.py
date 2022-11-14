@@ -42,7 +42,7 @@ def search_notes_by_text(text: str) -> str:
     return format_results
 
 
-def find_note_by_index() -> notes.Record | None:
+def find_note_by_index() -> notes.Record | str:
     dict_indexes = {}
 
     num = 1
@@ -54,6 +54,9 @@ def find_note_by_index() -> notes.Record | None:
 
         num += 1
 
+    if num == 1:
+        return "No notes"
+
     while True:
         try:
             index = int(
@@ -64,7 +67,7 @@ def find_note_by_index() -> notes.Record | None:
             continue
 
         if index == 0:
-            return
+            return "Cancel"
 
         try:
             return Notes().search_notes_by_id(dict_indexes[index])
@@ -84,8 +87,8 @@ def add_tags_to_notes() -> str:
     """
     note = find_note_by_index()
 
-    if not note:
-        return "Cancel"
+    if isinstance(note, str):
+        return note
 
     tag_input = None
 
