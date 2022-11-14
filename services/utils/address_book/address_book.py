@@ -6,6 +6,9 @@ from .record import Record
 
 
 class AddressBook:
+    def __init__(self) -> None:
+        self.root_package: str = "databases"
+        self.filename = os.path.join(self.root_package, "CONTACTS.dat")
 
     def add_record(self, record: Record) -> None:
         with open(self.filename, 'ab') as fh:
