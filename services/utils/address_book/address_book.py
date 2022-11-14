@@ -59,11 +59,12 @@ class AddressBook(DBSession):
                 yield self.__record_from_models_to_class(record)
 
     def __getitem__(self, item: str) -> Record:
-        for contact in self.get_all_contacts():
-            if item == contact.name.value:
-                return contact
-        else:
+        record = self.get_contact(item)
+
+        if not record:
             raise KeyError(item)
+
+        return record
 
     @classmethod
     def __record_from_models_to_class(cls, record: models.ModelContacts) -> Optional[Record]:
