@@ -60,7 +60,7 @@ def find_note_by_index() -> notes.Record | str:
     while True:
         try:
             index = int(
-                input("Enter the index of the note from the list to which you want to add new tags: "))
+                input("Enter the index of the note from the list: "))
         except ValueError:
             print("\nChoose a number from the list!")
             print("\n(Enter 0 to cancel)")
@@ -83,7 +83,6 @@ def add_tags_to_notes() -> str:
     Пользователь вводит команду add-tags.
     Далее пользователю будет предложено ввести теги, разделенные пробелом.
     Пример команды: add-tags
-    qwerty asdfg
     """
     note = find_note_by_index()
 
@@ -98,3 +97,26 @@ def add_tags_to_notes() -> str:
     note.add_tags(tag_input.split(" "))
 
     return 'The tags have been added successfully'
+
+
+@route('change-note')
+def change_note() -> str:
+    """
+    По этой команде бот изменяет ранее сохраненные заметки.
+    Пользователь вводит команду change-note.
+    Далее пользователю будет предложено ввести новый текст замметки.
+    Пример команды: change-note
+    """
+    note = find_note_by_index()
+
+    if isinstance(note, str):
+        return note
+
+    new_text = None
+
+    while not new_text:
+        new_text = input("Enter new note: ")
+
+    note.replace_text(new_text)
+
+    return 'Note was successfully change'
