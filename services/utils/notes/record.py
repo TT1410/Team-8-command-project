@@ -35,7 +35,6 @@ class Record(DBSession):
             try:
                 session.commit()
             except exc.IntegrityError as e:
-                print(e)
                 print(e.code)
                 print(str(e.orig) == "UNIQUE constraint failed: notes.note")
 
