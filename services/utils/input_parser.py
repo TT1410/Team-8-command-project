@@ -3,6 +3,7 @@ from types import FunctionType
 
 from services.decorators import input_error
 from .register_handlers import ROUTE_MAP
+from .selection_of_teams import selection_of_teams
 
 
 @input_error
@@ -18,7 +19,16 @@ def text_parsing(data: str) -> tuple[FunctionType, list[str] | None]:
 
             return func, None
     else:
-        raise ValueError("You entered an unknown command. Please enter the required command.\n")
+        if not command:
+            raise ValueError(f"To view a list of available commands with descriptions, type <help>\n")
+
+        suggest_commands = selection_of_teams(command)
+
+        if not suggest_commands:
+            raise ValueError(f"You entered an unknown command '{command}'. Please enter the required command.\n"
+                             f"To view a list of available commands with descriptions, type <help>\n")
+
+        raise ValueError(f"Perhaps you wanted to enter one of the {suggest_commands} commands?")
 
 
 def check_args(func, args: list) -> bool:
