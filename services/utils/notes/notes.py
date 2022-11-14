@@ -47,10 +47,7 @@ class Notes(DBSession):
                 .where(models.ModelNotes.id == _id)
             ).scalar()
 
-            if not record:
-                raise IndexError
-
-            return record
+            return self.__record_from_models_to_class(record)
 
     @staticmethod
     def __record_from_models_to_class(record: models.ModelNotes) -> Record:
