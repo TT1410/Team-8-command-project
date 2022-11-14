@@ -24,7 +24,7 @@ def add_contact(name: str) -> str:
         raise ValueError(f"Contact with the name {name} already exists. "
                          f"To add a new number to an existing contact, use the <change-contact> command.")
 
-    AddressBook().add_record(address_book.Record(**locals()))
+    address_book.Record(**locals())
 
     return f"Successfully created a new contact '{name}'"
 
@@ -39,8 +39,7 @@ def remove_contact(name: str) -> str:
     """
     contact = AddressBook()[name]
 
-    # Temporary command due to impossibility to change object in the file
-    AddressBook().change_contact(contact, remove=True)
+    contact.remove_record()
 
     return f"Successfully deleted contact '{name}'"
 

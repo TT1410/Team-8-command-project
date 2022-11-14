@@ -20,9 +20,6 @@ def change_contact_birthday(name: str) -> str:
 
     contact.change_birthday(birthday)
 
-    # Temporary command due to impossibility to change object in the file
-    AddressBook().change_contact(contact)
-
     return f"\nDate of birth {contact.birthday.value} of the contact '{name}' successfully saved"
 
 
