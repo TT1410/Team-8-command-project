@@ -52,18 +52,18 @@ def search_notes_by_tags(tags: str) -> str:
     """
 
     tags = tags.split()
-
     tags.sort()
-    results = {tag: notes.Notes().search_notes_by_tags([tag]) for tag in tags}
+
+    results: dict[str, list[notes.Record]] = {tag: notes.Notes().search_notes_by_tags([tag]) for tag in tags}
 
     if not results:
         return "Note was not found."
 
     format_results = ""
 
-    for result in results:
-        note = '\n\tNote: '.join([str(x.text.value) for x in results[result]])
-        format_results += f"{result}\n\tNote: {note}\n"
+    for key, value in results.items():
+        note = '\n\tNote: '.join([str(x.text.value) for x in value])
+        format_results += f"{key}\n\tNote: {note}\n"
 
     return format_results
 
