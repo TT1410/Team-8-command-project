@@ -13,7 +13,7 @@ class Address(Field):
         self._value: str = self.check_name(value)
 
     @classmethod
-    def check_name(value: str) -> str:
+    def check_name(cls, value: str) -> str:
         clean_value = value.strip()
         pattern = r'(?!^\d+$)^.+$'
 
