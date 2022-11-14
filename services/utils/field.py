@@ -1,7 +1,8 @@
 
 class Field:
     def __init__(self, value: str):
-        self._value = value
+        self._value = None
+        self.value = value
 
     @property
     def value(self):

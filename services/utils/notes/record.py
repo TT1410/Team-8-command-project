@@ -32,11 +32,15 @@ class Record(DBSession):
 
         with self.db_session() as session:
             record = session.merge(models.ModelNotes(note=self.text.value, tags=str_tags))
+
             try:
                 session.commit()
             except exc.IntegrityError as e:
-                print(e.code)
-                print(str(e.orig) == "UNIQUE constraint failed: notes.note")
+
+                if str(e.orig) == "UNIQUE constraint failed: notes.note":
+                    raise ValueError(f"A note with this text already exists."
+                                     f"To change an existing note, use the <change-note> command.")
+                print(e)
 
             self._id = record.id
 

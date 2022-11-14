@@ -4,10 +4,6 @@ from services.utils.field import Field
 
 
 class Email(Field):
-    def __init__(self, value: str):
-        super().__init__(value)
-        self.value: str = value
-
     @Field.value.setter
     def value(self, value):
         self._value: str = self.__check_email(value)

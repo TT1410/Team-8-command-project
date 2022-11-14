@@ -6,7 +6,7 @@ from services.db.base import Base
 
 
 class ModelNotes(Base):
-    """Notes"""
+    """Notes table"""
     __tablename__ = "notes"
 
     id = Column(Integer, primary_key=True)
