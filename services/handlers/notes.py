@@ -120,3 +120,21 @@ def change_note() -> str:
     note.replace_text(new_text)
 
     return 'Note was successfully change'
+
+
+@route('delete-note')
+def delete_note() -> str:
+    """
+    По этой команде бот удаляет ранее сохраненные заметки.
+    Пользователь вводит команду delete-note.
+    Далее пользователю будет предложено ввеести номер удаляемой заметки.
+    Пример команды: delete-note
+    """
+    note = find_note_by_index()
+
+    if isinstance(note, str):
+        return note
+
+    note.remove_record()
+    
+    return 'Note was successfully deleted'
