@@ -14,7 +14,7 @@ def main() -> None:
         colored(
       '''\nDeveloped by GoIt Team 8
          \nYour personal assistant welcomes you.
-         \nType "help" to see the commands
+         \nType "help" to see all available commands
         ''', "green"
         )
     )
