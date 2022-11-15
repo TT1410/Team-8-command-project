@@ -8,9 +8,9 @@ from services.utils import AddressBook
 @input_error
 def add_phone_to_contact(name: str) -> str:
     """
-    По этой команде бот сохраняет в памяти новый номер телефона для существующего контакта.
-    Пользователь вводит команду add-phone и имя, обязательно через пробел.
-    Пример команды: add-phone UserName
+    With this command, the bot saves a new phone number for an existing contact in memory.
+    The user enters the "add-phone" command and the name, necessarily separated by a space.
+    Command example: add-phone UserName
     """
     contact = AddressBook()[name]
 
@@ -23,10 +23,10 @@ def add_phone_to_contact(name: str) -> str:
 @input_error
 def change_contact_phone(name: str) -> Optional[str]:
     """
-    По этой команде бот заменяет старый номер телефона новым для существующего контакта.
-    Пользователь вводит команду change-phone и имя, обязательно через пробел.
-    Далее пользователю будет предложено выбрать из списка номер, который необходимо заменить новым.
-    Пример команды: change-phone UserName 
+    On this command, the bot replaces the old phone number with the new one for the existing contact.
+    The user enters the "change-phone" command and the name, necessarily separated by a space.
+    Next, the user will be prompted to select from the list the number that needs to be replaced with a new one.
+    Command example: change-phone UserName
     """
     contact = AddressBook()[name]
 
@@ -61,10 +61,10 @@ def change_contact_phone(name: str) -> Optional[str]:
 @input_error
 def remove_contact_phone(name: str) -> Optional[str]:
     """
-    По этой команде бот удаляет номер телефона существующего контакта.
-    Пользователь вводит команду remove-phone и имя, обязательно через пробел.
-    Далее будет предложено выбрать номер из списка, который необходимо удалить.
-    Пример команды: remove-phone UserName
+    With this command, the bot deletes the phone number of an existing contact.
+    The user enters the "remove-phone" command and the name, necessarily separated by a space.
+    Next, you will be prompted to select the number from the list that you want to delete.
+    Command example: remove-phone UserName
     """
     contact = AddressBook()[name]
 
@@ -97,9 +97,9 @@ def remove_contact_phone(name: str) -> Optional[str]:
 @input_error
 def contact_phones(name: str) -> str:
     """
-    По этой команде бот выводит в консоль номера телефонов для указанного контакта.
-    Пользователь вводит команду phone и имя контакта, чьи номера нужно показать, обязательно через пробел.
-    Пример команды: phone UserName
+    By this command, the bot displays the phone numbers for the specified contact in the console.
+    The user enters the "phone" command and the name of the contact whose numbers need to be shown, separated by a space.
+    Command example: phone UserName
     """
     contact = AddressBook()[name]
 
