@@ -9,9 +9,9 @@ from services.utils import AddressBook
 @input_error
 def change_contact_birthday(name: str) -> str:
     """
-    По этой команде изменяет день рождения для существующего контакта.
-    Пользователь вводит команду change-bd и имя обязательно через пробел.
-    Пример команды: change-bd UserName
+    This command changes the birthday for an existing contact.
+    The user enters the "change-bd" command and the name must be separated by a space.
+    Command example: change-bd UserName
     """
     contact = AddressBook()[name]
 
