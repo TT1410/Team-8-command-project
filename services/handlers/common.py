@@ -46,7 +46,13 @@ def print_name(value: str = None) -> str:
 @route("sort-files")
 @input_error
 def sorting_files_in_a_dir(path: str) -> str:
-    
+    '''
+    The "sort-files" command sorts the files and folders in the target directory. 
+    In the course of work, the file extension is checked and, depending on the extension, 
+    a decision is made to which category this file belongs.
+    The command takes one argument - this is the name of the folder in which it will sort.
+    Command example: sort-files /user/Desktop/other
+    '''
     root_folder = Path(path)
 
     if not root_folder.exists():
