@@ -6,9 +6,9 @@ from services.utils import AddressBook
 @input_error
 def change_contact_email(name: str) -> str:
     """
-    По этой команде изменяет email для существующего контакта.
-    Пользователь вводит команду change-email и имя, обязательно через пробел.
-    Пример команды: change-email UserName
+    This command changes the email for an existing contact.
+    The user enters the "change-email" command and a name, necessarily separated by a space.
+    Command example: change-email UserName
     """
     contact = AddressBook()[name]
 
