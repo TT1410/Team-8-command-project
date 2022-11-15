@@ -55,6 +55,14 @@ def sorting_files_in_a_dir(path: str) -> str:
     elif root_folder.is_file():
         raise ValueError("[-] За даним шляхом знаходиться файл")
 
+    while True:
+        text = input(f"Підтвердіть сортування файлів у каталозі '{root_folder.absolute()}' (так/ні): ")
+
+        if text.lower() == "так":
+            break
+        elif text.lower() == "ні":
+            return "Сортування файлів відмінено"
+
     extensions = []
 
     for ext in DIR_SUFF_DICT.values():
