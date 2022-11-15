@@ -7,7 +7,7 @@ from services.utils import AddressBook
 def change_contact_address(name: str) -> str:
     """
     This command changes the address for an existing contact.
-    The user enters the change-adress command and the name, necessarily separated by a space.
+    The user enters the "change-adress" command and the name, necessarily separated by a space.
     Command example: change-address UserName
     """
     contact = AddressBook()[name]
