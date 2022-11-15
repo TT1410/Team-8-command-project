@@ -6,9 +6,9 @@ from services.utils import notes, Notes
 @input_error
 def add_note(text: str) -> str:
     """
-    По этой команде бот сохраняет в памяти новую заметку.
-    Пользователь вводит команду add-note и текст, обязательно через пробел.
-    Пример команды: add-note lorem ipsum dolor sit amet
+    On this command, the bot stores a new note in memory.
+    The user enters the "add-note" command and text, necessarily separated by a space.
+    Command example: add-note
     """
     note = notes.Record(text)
 
@@ -25,9 +25,9 @@ def add_note(text: str) -> str:
 @input_error
 def search_notes_by_text(text: str) -> str:
     """
-    По этой команде бот ищет в памяти заметку по тексту.
-    Пользователь вводит через пробел команду search-text и текст по которому будет происходить поиск.
-    Пример команды: search-text lorem ipsum dolor sit amet
+    By this command, the bot searches the memory for a note by text.
+    The user enters the "search-text" command separated by a space and the text that will be searched.
+    Command example: search-text lorem ipsum dolor sit amet
     """
     results = notes.Notes().search_notes_by_text(text)
 
@@ -46,9 +46,9 @@ def search_notes_by_text(text: str) -> str:
 @input_error
 def search_notes_by_tags(tags: str) -> str:
     """
-    По этой команде бот ищет в памяти заметку по тегам.
-    Пользователь вводит через пробел команду search-tags и тег/теги через пробел по которым будет происходить поиск.
-    Пример команды: search-tags tag1 tag2
+    By this command, the bot searches the memory for a note by tags.
+    The user enters a space-separated "search-tags" command and a space-separated tag/tags that will be searched.
+    Command example: search-tags tag1 tag2
     """
 
     tags = tags.split()
@@ -105,10 +105,10 @@ def find_note_by_index() -> notes.Record | str:
 @route('add-tags')
 def add_tags_to_notes() -> str:
     """
-    По этой команде бот добавляет теги для существующей записи.
-    Пользователь вводит команду add-tags.
-    Далее пользователю будет предложено ввести теги, разделенные пробелом.
-    Пример команды: add-tags
+    With this command, the bot adds tags to an existing post.
+    The user enters the "add-tags" command.
+    Next, the user will be prompted to enter tags separated by a space.
+    Command example: add-tags
     """
     note = find_note_by_index()
 
@@ -128,10 +128,10 @@ def add_tags_to_notes() -> str:
 @route('change-note')
 def change_note() -> str:
     """
-    По этой команде бот изменяет ранее сохраненные заметки.
-    Пользователь вводит команду change-note.
-    Далее пользователю будет предложено ввести новый текст заметки.
-    Пример команды: change-note
+    With this command, the bot changes previously saved notes.
+    The user enters the "change-note" command.
+    Next, the user will be prompted to enter a new note text.
+    Command example: change-note
     """
     note = find_note_by_index()
 
@@ -151,10 +151,10 @@ def change_note() -> str:
 @route('delete-note')
 def delete_note() -> str:
     """
-    По этой команде бот удаляет ранее сохраненную заметку.
-    Пользователь вводит команду delete-note.
-    Далее пользователю будет предложено выбрать из списка заметку для удаления.
-    Пример команды: delete-note
+    By this command, the bot deletes the previously saved note.
+    The user enters the "delete-note" command.
+    Next, the user will be prompted to select a note to delete from the list.
+    Command example: delete-note
     """
     note = find_note_by_index()
 
