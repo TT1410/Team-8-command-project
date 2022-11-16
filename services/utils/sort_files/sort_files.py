@@ -56,7 +56,8 @@ def file_moderation(file: Path, path: Path) -> str | None:
                         archive_folder
                     )
                 except (shutil.ReadError, RuntimeError) as e:
-                    print(f"Виникла помилка: {e}\nНевдала спроба розпакувати архів: {file.absolute()}")
+                    print(
+                        f"An error occurred: {e}\nAn attempt to extract the archive failed: {file.absolute()}")
             
             return folder_name
     
@@ -86,12 +87,12 @@ def normalize(name: str) -> str:
 
 def report_folder(path: Path, file_extensions: dict, other_file_extensions: list) -> None:
 
-    print(f"\nУ каталозі «{path}» знайдено файли з розширенням:")
-    print("{:^15}|{:>5}".format("Розширення", "Кількість"))
+    print(f"\nIn directory «{path}» found files with extension:\n"
+          f"{'Extension':^15}|{'Quantity':>5}")
 
     for extension, quantity in file_extensions.items():
         print("{:^15}|{:>5}".format(extension, quantity))
 
     if other_file_extensions[0]:
         print(
-            f"{other_file_extensions[0]} файлів з невідомим розширенням: {', '.join(other_file_extensions[1])}\n")
+            f"{other_file_extensions[0]} files with an unknown extension: {', '.join(other_file_extensions[1])}\n")
