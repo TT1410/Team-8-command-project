@@ -11,28 +11,35 @@ from services.utils.sort_files import DIR_SUFF_DICT, FOUND_FILES, sort
 @route("hello")
 def hello() -> str:
     """
-    Responds to the console "How can I help you?"
+    Answer: "How can I help you?"
     """
     return "How can I help you?"
 
 
 @route("help")
-def help_command() -> str:
+def help_command(command: str = None) -> str:
     """
-    Displays a list of available commands.
+    Displays information about the command.
+    If the command does not exist, it displays a list of available commands.
+    Command example: help add-contact
     """
     report_commands = ""
+    report_one_command = None
 
     for commands, func in ROUTE_MAP.items():
+        if command:
+            if (isinstance(commands, tuple) and command.lower() in commands) or command.lower() == commands:
+                report_one_command = Fore.CYAN + str(commands) + Fore.YELLOW + (func.__doc__ or '\n\t- - -') + '\n'
+
         report_commands += Fore.CYAN + str(commands) + Fore.YELLOW + (func.__doc__ or '\n\t- - -') + '\n'
 
-    return report_commands
+    return report_one_command or report_commands
 
 
 @route(["good-bye", "close", "exit"])
 def close_bot() -> str:
     """
-    For any of the commands, the bot completes its work.
+    The bot completes its work.
     """
     return "Good bye!"
 
