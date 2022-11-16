@@ -1,5 +1,7 @@
 from functools import wraps
 
+from colorama import Fore
+
 
 def input_error(func):
     @wraps(func)
@@ -7,10 +9,10 @@ def input_error(func):
         try:
             return func(*args, **kwargs)
         except ValueError as e:
-            print(f"{e}\n")
+            print(Fore.RED + f"{e}\n")
         except KeyError as e:
-            print(f"User {e} not found\n")
+            print(Fore.RED + f"User {e} not found\n")
         except IndexError as e:
-            print(f"{e}\n")
+            print(Fore.RED + f"{e}\n")
 
     return inner

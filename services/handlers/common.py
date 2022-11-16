@@ -1,6 +1,8 @@
 from pathlib import Path
 from time import sleep
 
+from colorama import Fore
+
 from services.decorators import input_error, route
 from services.utils import ROUTE_MAP
 from services.utils.sort_files import DIR_SUFF_DICT, FOUND_FILES, sort
@@ -9,7 +11,7 @@ from services.utils.sort_files import DIR_SUFF_DICT, FOUND_FILES, sort
 @route("hello")
 def hello() -> str:
     """
-    Отвечает в консоль "How can I help you?"
+    Responds to the console "How can I help you?"
     """
     return "How can I help you?"
 
@@ -17,12 +19,12 @@ def hello() -> str:
 @route("help")
 def help_command() -> str:
     """
-    Выводит список доступных команд.
+    Displays a list of available commands.
     """
     report_commands = ""
 
     for commands, func in ROUTE_MAP.items():
-        report_commands += str(commands) + (func.__doc__ or '\n\t- - -') + '\n'
+        report_commands += Fore.CYAN + str(commands) + Fore.YELLOW + (func.__doc__ or '\n\t- - -') + '\n'
 
     return report_commands
 
@@ -30,7 +32,7 @@ def help_command() -> str:
 @route(["good-bye", "close", "exit"])
 def close_bot() -> str:
     """
-    По любой из команд бот завершает свою роботу.
+    For any of the commands, the bot completes its work.
     """
     return "Good bye!"
 
@@ -38,7 +40,7 @@ def close_bot() -> str:
 @route("echo")
 def print_name(value: str = None) -> str:
     """
-    Возвращает введенный текст.
+    Returns the entered text.
     """
     return value
 
@@ -46,13 +48,13 @@ def print_name(value: str = None) -> str:
 @route("sort-files")
 @input_error
 def sorting_files_in_a_dir(path: str) -> str:
-    '''
+    """
     The "sort-files" command sorts the files and folders in the target directory. 
     In the course of work, the file extension is checked and, depending on the extension, 
     a decision is made to which category this file belongs.
     The command takes one argument - this is the name of the folder in which it will sort.
     Command example: sort-files /user/Desktop/other
-    '''
+    """
     root_folder = Path(path)
 
     if not root_folder.exists():
@@ -63,7 +65,8 @@ def sorting_files_in_a_dir(path: str) -> str:
 
     while True:
         text = input(
-            f"Confirm the sorting of the files in the directory '{root_folder.absolute()}' (yes/no): ")
+            f"{Fore.CYAN}Confirm the sorting of the files in the directory "
+            f"{Fore.MAGENTA}'{root_folder.absolute()}' {Fore.CYAN}(yes/no):{Fore.RESET} ")
 
         if text.lower() == "yes":
             break
@@ -75,19 +78,21 @@ def sorting_files_in_a_dir(path: str) -> str:
     for ext in DIR_SUFF_DICT.values():
         extensions.extend(ext)
 
-    print(f"Search for files with the following extensions: {extensions}")
+    print(f"{Fore.YELLOW}Search for files with the following extensions: {Fore.CYAN}{extensions}")
     sleep(5)
 
     sort(root_folder)
 
     return ("""\n[!] Sorting is complete
-    Found {images_len} files of category images: {images}
-    Found {documents_len} files of category documents: {documents}
-    Found {audio_len} files of category audio: {audio}
-    Found {video_len} files of category video: {video}
-    Found and unpacked {archives_len} files of category archives: {archives}
-    Found {unknown_len} files with unknown extension: {unknown}
+    Found {cyan}{images_len}{yellow} files of category images: {cyan}{images}{yellow}
+    Found {cyan}{documents_len}{yellow} files of category documents: {cyan}{documents}{yellow}
+    Found {cyan}{audio_len}{yellow} files of category audio: {cyan}{audio}{yellow}
+    Found {cyan}{video_len}{yellow} files of category video: {cyan}{video}{yellow}
+    Found and unpacked {cyan}{archives_len}{yellow} files of category archives: {cyan}{archives}{yellow}
+    Found {cyan}{unknown_len}{yellow} files with unknown extension: {cyan}{unknown}
     """.format(
+        cyan=Fore.CYAN,
+        yellow=Fore.YELLOW,
         images_len=len(FOUND_FILES['images']),
         documents_len=len(FOUND_FILES['documents']),
         audio_len=len(FOUND_FILES['audio']),

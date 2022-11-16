@@ -8,9 +8,9 @@ from services.utils import AddressBook, address_book
 @input_error
 def add_contact(name: str) -> str:
     """
-    По этой команде бот сохраняет в памяти новый контакт.
-    Пользователь вводит команду add-contact и имя, обязательно через пробел.
-    Пример команды: add-contact UserName
+    On this command, the bot saves a new contact in memory.
+    The user enters the "add-contact" command and the name, necessarily separated by a space.
+    Command example: add-contact UserName
     """
     phone = input("Enter phone number: ")
 
@@ -33,9 +33,9 @@ def add_contact(name: str) -> str:
 @input_error
 def remove_contact(name: str) -> str:
     """
-    По этой команде бот удаляет контакт.
-    Пользователь вводит команду remove-contact и имя, обязательно через пробел.
-    Пример команды: remove-contact UserName
+    On this command, the bot deletes the contact.
+    The user enters the "remove-contact" command and the name, necessarily separated by a space.
+    Command example: remove-contact UserName
     """
     contact = AddressBook()[name]
 
@@ -48,7 +48,7 @@ def remove_contact(name: str) -> str:
 @input_error
 def show_all_users() -> str:
     """
-    По этой команде бот выводит все сохраненные контакты со всеми данными в консоль.
+    By this command, the bot displays all saved contacts with all the data to the console.
     """
     format_contacts = ""
 
@@ -58,7 +58,7 @@ def show_all_users() -> str:
         format_contacts += contact.format_record()
 
     return (f": {'Name':^15} : {'Email':^15} : {'Birthday':^10} : {'Phones':^30} : {'Address':^30} :\n" +
-            format_contacts) if format_contacts else "Не сохранено ни одного контакта."
+            format_contacts) if format_contacts else "No contact has been saved."
 
 
 @route("search-contacts")

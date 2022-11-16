@@ -3,6 +3,8 @@ import os
 from pathlib import Path
 import shutil
 
+from colorama import Fore
+
 from .constants import (
     DIR_SUFF_DICT,
     TRANS, FOUND_FILES
@@ -57,7 +59,8 @@ def file_moderation(file: Path, path: Path) -> str | None:
                     )
                 except (shutil.ReadError, RuntimeError) as e:
                     print(
-                        f"An error occurred: {e}\nAn attempt to extract the archive failed: {file.absolute()}")
+                        f"{Fore.RED}An error occurred: {e}\n"
+                        f"An attempt to extract the archive failed: {Fore.MAGENTA}{file.absolute()}")
             
             return folder_name
     
@@ -87,12 +90,13 @@ def normalize(name: str) -> str:
 
 def report_folder(path: Path, file_extensions: dict, other_file_extensions: list) -> None:
 
-    print(f"\nIn directory «{path}» found files with extension:\n"
-          f"{'Extension':^15}|{'Quantity':>5}")
+    print(f"{Fore.GREEN}\nIn directory {Fore.MAGENTA}«{path}»{Fore.GREEN} found files with extension:\n"
+          f"{Fore.MAGENTA}{'Extension':^15}{Fore.GREEN}|{Fore.MAGENTA}{'Quantity':>5}")
 
     for extension, quantity in file_extensions.items():
-        print("{:^15}|{:>5}".format(extension, quantity))
+        print(f"{Fore.CYAN}{str(extension):^15}{Fore.GREEN}|{Fore.CYAN}{str(quantity):>5}")
 
     if other_file_extensions[0]:
         print(
-            f"{other_file_extensions[0]} files with an unknown extension: {', '.join(other_file_extensions[1])}\n")
+            f"{Fore.CYAN}{other_file_extensions[0]}{Fore.GREEN} files with an unknown extension: "
+            f"{Fore.CYAN}{', '.join(other_file_extensions[1])}\n")
