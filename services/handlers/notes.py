@@ -21,7 +21,7 @@ def add_note(text: str) -> str:
     return "Note was successfully added"
 
 
-@route('search-text')
+@route('search-note')
 @input_error
 def search_notes_by_text(text: str) -> str:
     """

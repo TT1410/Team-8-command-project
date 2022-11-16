@@ -27,14 +27,14 @@ def change_contact_birthday(name: str) -> str:
 @input_error
 def search_birthday_boy(days: str) -> Optional[str]:
     """
-    По этой команде бат выводит в консоль все контакты, у которых день рождения через заданное количество дней.
-    Пользователь вводит команду search-birthday и количество дней, обязательно через пробел.
-    Пример команды: search-bd 520
+    By this command, the bat displays in the console all contacts who have a birthday in a given number of days.
+    The user enters the "search-birthday" command followed by the number of days, separated by a space.
+    Command example: search-bd 520
     """
     try:
         days = int(days)
     except ValueError:
-        raise ValueError("Можно вводить только целые числа.")
+        raise ValueError("Only whole numbers can be entered.")
 
     format_contacts = ""
     target_date = date.today() + timedelta(days=days)
@@ -49,16 +49,16 @@ def search_birthday_boy(days: str) -> Optional[str]:
             format_contacts += contact.format_record()
 
     return (f": {'Name':^15} : {'Email':^15} : {'Birthday':^10} : {'Phones':^30} : {'Address':^30} :\n" +
-            format_contacts) if format_contacts else "Нет ни одного именинника в этот день"
+            format_contacts) if format_contacts else "There is no birthday on this day"
 
 
 @route("days-bd")
 @input_error
 def days_before_birthday(name: str) -> str:
     """
-    По этой команде бот выводит в консоль, сколько осталось дней до дня рождения контакта.
-    Пользователь вводит команду days-bd и имя контакта, обязательно через пробел.
-    Пример команды: days-bd UserName
+    By this command, the bot displays in the console how many days are left until the contact's birthday.
+    The user enters the "days-bd command" followed by the contact name, separated by a space.
+    Command example: days-bd UserName
     """
     days = AddressBook()[name].days_to_birthday()
 
