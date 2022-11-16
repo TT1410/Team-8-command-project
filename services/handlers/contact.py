@@ -64,14 +64,14 @@ def show_all_users() -> str:
 @route("search-contacts")
 def search_contacts(search_value: str) -> Optional[str]:
     """
-    По этой команде бот выводит в консоль всех контактов, у которых есть совпадение со строкой поиска в имени, или номере.
-    Пользователь вводит команду search-contacts и имя контакта, обязательно через пробел.
-    Пример команды: search-contact any
+    By this command, the bot displays in the console all contacts that have a match with the search string in the name or number.
+    The user enters the "search-contacts" command and the name of the contact, separated by a space.
+    Command example: search-contact any
     """
     contacts = AddressBook().search_contacts(search_value)
 
     if not contacts:
-        return "Не найдено ни одного контакта."
+        return "No contact found."
 
     format_contacts = ""
 
