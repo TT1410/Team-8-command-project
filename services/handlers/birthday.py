@@ -10,7 +10,7 @@ from services.utils import AddressBook
 def change_contact_birthday(name: str) -> str:
     """
     This command changes the birthday for an existing contact.
-    The user enters the "change-bd" command and the name must be separated by a space.
+    The user enters the "change-bd" command and the name, must be separated by a space.
     Command example: change-bd UserName
     """
     contact = AddressBook()[name]
