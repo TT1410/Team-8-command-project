@@ -46,40 +46,47 @@ def print_name(value: str = None) -> str:
 @route("sort-files")
 @input_error
 def sorting_files_in_a_dir(path: str) -> str:
-    
+    '''
+    The "sort-files" command sorts the files and folders in the target directory. 
+    In the course of work, the file extension is checked and, depending on the extension, 
+    a decision is made to which category this file belongs.
+    The command takes one argument - this is the name of the folder in which it will sort.
+    Command example: sort-files /user/Desktop/other
+    '''
     root_folder = Path(path)
 
     if not root_folder.exists():
-        raise ValueError("[-] Неіснуюча директорія")
+        raise ValueError("[-] Nonexistent directory")
 
     elif root_folder.is_file():
-        raise ValueError("[-] За даним шляхом знаходиться файл")
+        raise ValueError("[-] The file is located at this path")
 
     while True:
-        text = input(f"Підтвердіть сортування файлів у каталозі '{root_folder.absolute()}' (так/ні): ")
+        text = input(
+            f"Confirm the sorting of the files in the directory '{root_folder.absolute()}' (yes/no): ")
 
-        if text.lower() == "так":
+        if text.lower() == "yes":
             break
-        elif text.lower() == "ні":
-            return "Сортування файлів відмінено"
+        elif text.lower() == "no":
+            return "File sorting canceled"
 
     extensions = []
 
     for ext in DIR_SUFF_DICT.values():
         extensions.extend(ext)
 
-    print(f"Пошук файлів з наступними розширеннями: {extensions}")
+    print(f"Search for files with the following extensions: {extensions}")
     sleep(5)
 
     sort(root_folder)
 
-    return ("""\n[!] Сортування завершено
-    Знайдено {images_len} файлів категорії images: {images}
-    Знайдено {documents_len} файлів категорії documents: {documents}
-    Знайдено {audio_len} файлів категорії audio: {audio}
-    Знайдено {video_len} файлів категорії video: {video}
-    Знайдено та розпаковано {archives_len} файлів категорії archives: {archives}
-    Знайдено {unknown_len} файлів з невідомим розширенням: {unknown}
+    return ("""\n[!] Sorting is complete
+    Found {images_len} files of category images: {images}
+    Found {documents_len} files of category documents: {documents}
+    Found {audio_len} files of category audio: {audio}
+    Found {video_len} files of category video: {video}
+    Found and unpacked {archives_len} files of category archives: {archives}
+    Found {unknown_len} files with unknown extension: {unknown}
     """.format(
         images_len=len(FOUND_FILES['images']),
         documents_len=len(FOUND_FILES['documents']),
