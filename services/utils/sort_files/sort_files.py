@@ -87,8 +87,8 @@ def normalize(name: str) -> str:
 
 def report_folder(path: Path, file_extensions: dict, other_file_extensions: list) -> None:
 
-    print(f"\nIn directory «{path}» found files with extension:")
-    print("{:^15}|{:>5}".format("Extension", "Quantity"))
+    print(f"\nIn directory «{path}» found files with extension:\n"
+          f"{'Extension':^15}|{'Quantity':>5}")
 
     for extension, quantity in file_extensions.items():
         print("{:^15}|{:>5}".format(extension, quantity))
