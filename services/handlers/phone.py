@@ -84,11 +84,10 @@ def remove_contact_phone(name: str) -> Optional[str]:
 
         try:
             phone = contact.remove_phone(index)
+            break
         except IndexError:
             print("\nChoose a number from the list!")
             print("\n(Enter 0 to cancel)")
-        else:
-            break
 
     return f"\nContact phone number {name} '{phone.value}' deleted successfully"
 

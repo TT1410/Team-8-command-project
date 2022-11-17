@@ -1,9 +1,3 @@
-# from console_bot.services.utils import register_message_handler
-from .address import change_contact_address
-from .birthday import (
-    change_contact_birthday,
-    days_before_birthday,
-)
 from .common import (
     hello,
     help_command,
@@ -16,16 +10,23 @@ from .contact import (
     show_all_users,
     search_contacts,
 )
-from .email import change_contact_email
 from .phone import (
     add_phone_to_contact,
     change_contact_phone,
     remove_contact_phone,
     contact_phones,
 )
+from .birthday import (
+    change_contact_birthday,
+    days_before_birthday,
+)
+from .address import change_contact_address
+from .email import change_contact_email
 from .notes import (
     add_note
 )
+
+# from console_bot.services.utils import register_message_handler
 
 # register_message_handler(hello, 'hello')
 # register_message_handler(add_user, 'add', 3)

@@ -29,7 +29,7 @@ class Record(DBSession):
                  contact_id: Optional[int] = None) -> None:
         self.name: Name = Name(name)
         self.phones: list[Phone] = [Phone(phone)] if phone else []
-        self.birthday: Birthday = Birthday(birthday) if birthday else ''
+        self.birthday: Birthday = Birthday(birthday) if birthday else None
         self.address: Address = Address(address) if address else ''
         self.email: Email = Email(email) if email else ''
         self.contact_id = contact_id
@@ -45,9 +45,9 @@ class Record(DBSession):
                 models.ModelContacts(
                     name=self.name.value,
                     phones=str_phones,
-                    birthday=self.birthday.value,
-                    address=self.address.value,
-                    email=self.email.value
+                    birthday=self.birthday.value if self.birthday else None,
+                    address=self.address.value if self.address else '',
+                    email=self.email.value if self.email else ''
                 )
             )
 
@@ -55,8 +55,8 @@ class Record(DBSession):
                 session.commit()
             except exc.IntegrityError as e:
 
-                if str(e.orig) == "UNIQUE constraint failed: notes.note":
-                    raise ValueError(f"This contact is already created.")
+                if str(e.orig) == "UNIQUE constraint failed: contacts.name":
+                    raise ValueError(f"Contact with the name «{self.name.value}» already exists.")
 
                 print(e)
 

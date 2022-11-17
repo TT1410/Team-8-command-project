@@ -6,10 +6,10 @@ from services.utils.field import Field
 class Address(Field):
     @Field.value.setter
     def value(self, value):
-        self._value: str = self.check_name(value)
+        self._value: str = self.check_address(value)
 
     @staticmethod
-    def check_name(value: str) -> str:
+    def check_address(value: str) -> str:
         clean_value = value.strip()
         pattern = r'(?!^\d+$)^.+$'
 

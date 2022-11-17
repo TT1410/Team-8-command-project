@@ -1,3 +1,1 @@
-import os
-
-DB_PATH = os.path.join("databases", "database.db")
+DB_PATH = "database.db"
