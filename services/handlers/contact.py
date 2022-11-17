@@ -12,21 +12,23 @@ def add_contact(name: str) -> str:
     The user enters the "add-contact" command and the name, necessarily separated by a space.
     Command example: add-contact UserName
     """
+    address_book.Name(name)
+
     phone = input("Enter phone number: ")
+    address_book.Phone(phone) if phone else None
 
     birthday = input("Enter date of birth (YYYY.MM.DD or DD.MM.YYYY): ")
+    address_book.Birthday(birthday) if birthday else None
 
     address = input("Enter address: ")
+    address_book.Address(address) if address else None
 
-    email = input("Enter email (example@damain.com): ")
+    email = input("Enter email (example@domain.com): ")
+    address_book.Email(email) if email else None
 
-    if AddressBook().get_contact(name):
-        raise ValueError(f"Contact with the name {name} already exists. "
-                         f"To add a new number to an existing contact, use the <change-contact> command.")
+    contact = address_book.Record(**locals())
 
-    address_book.Record(**locals())
-
-    return f"Successfully created a new contact '{name}'"
+    return f"Successfully created a new contact '{contact.name.value}'"
 
 
 @route("remove-contact")

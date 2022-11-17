@@ -16,7 +16,7 @@ class Name(Field):
             .replace("(", "")
             .replace(")", "")
             .replace("-", "")
-            .capitalize()
+            .title()
         )
 
         if search(r"\d+", clean_value) or len(clean_value) < 3 or len(clean_value) > 30:

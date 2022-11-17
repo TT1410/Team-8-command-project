@@ -73,7 +73,7 @@ class AddressBook(DBSession):
 
         contact = Record(
             name=record.name,
-            birthday=record.birthday.isoformat(),
+            birthday=record.birthday.isoformat() if record.birthday else None,
             address=record.address,
             email=record.email,
             contact_id=record.id
