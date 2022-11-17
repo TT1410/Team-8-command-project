@@ -1,6 +1,6 @@
 from re import search
 
-from .field import Field
+from personal_assistant.services.utils.field import Field
 
 
 CODES_MOBILE_UA = ['067', '096', '097', '098',
@@ -11,11 +11,6 @@ CODES_MOBILE_UA = ['067', '096', '097', '098',
 
 
 class Phone(Field):
-
-    def __init__(self, value: str):
-        super().__init__(value)
-        self.value: int = value
-
     @Field.value.setter
     def value(self, value):
         self._value: int = self.__check_phone_number(value)

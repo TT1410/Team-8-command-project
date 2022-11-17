@@ -1,13 +1,9 @@
 from re import search
 
-from .field import Field
+from personal_assistant.services.utils.field import Field
 
 
 class Name(Field):
-    def __init__(self, value: str):
-        super().__init__(value)
-        self.value: str = value
-
     @Field.value.setter
     def value(self, value):
         self._value: str = self.check_name(value)
@@ -20,7 +16,7 @@ class Name(Field):
             .replace("(", "")
             .replace(")", "")
             .replace("-", "")
-            .capitalize()
+            .title()
         )
 
         if search(r"\d+", clean_value) or len(clean_value) < 3 or len(clean_value) > 30:

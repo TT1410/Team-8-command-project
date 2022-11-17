@@ -1,7 +1,8 @@
 
 class Field:
     def __init__(self, value: str):
-        self._value = value
+        self._value = None
+        self.value = value
 
     @property
     def value(self):
@@ -12,4 +13,4 @@ class Field:
         self._value = value
 
     def __repr__(self):
-        return f"{self.__class__.__name__}({self.value})"
+        return f"{self.__class__.__name__}(value={self.value!r})"
